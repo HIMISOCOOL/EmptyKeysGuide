@@ -18,16 +18,16 @@ A basic Guide to using EmptyKeys with Monogame
     - MonoGame Game
 
 - Add a reference to these three dlls in the MonoGame Project
-  - EmptyKeys.UserInterface (Under EmptyKeys/Common/AnyCPU)
-  - EmptyKeys.UserInterface.Core (Under EmptyKeys/Common/AnyCPU)
-  - EmptyKeys.UserInterface.MonogGame (Under EmptyKeys/MonoGame/AnyCPU)
+  - EmptyKeys.UserInterface (EmptyKeys/Common/AnyCPU)
+  - EmptyKeys.UserInterface.Core (EmptyKeys/Common/AnyCPU)
+  - EmptyKeys.UserInterface.MonogGame (EmptyKeys/MonoGame/AnyCPU)
 
 - Create a WPF User Control Library called UserInterface
   - Add a reference to EmptyKeys.UserInterface.Designer (in the folder EmptyKeys/Generator/AnyCPU)
 
 - Right Click The UserInteface Project and click Properties, go down to Build Events and add Edit Post-Build...
-  - Add the Following: $(ProjectDir)..\EmptyKeys\Generator\ekUiGen.exe -i=$(ProjectDir) -o=$(ProjectDir)..\MonoGame Game\UI -oa=$(ProjectDir)..\MonoGame Game\Content -rm=MonoGamm
-  - Replace "MonoGame Game" with the name of your game's project 
+  - Add the Following: $(ProjectDir)..\EmptyKeys\Generator\ekUiGen.exe -i=$(ProjectDir) -o=$(ProjectDir)..\<MonoGame Game>\UI -oa=$(ProjectDir)..\<MonoGame Game>\Content -rm=MonoGame
+  - Replace "<MonoGame Game>" with the name of your game's project 
 
 - Add a WPF UserControl to the UserInterface Project
 
@@ -131,3 +131,5 @@ public class Game1 : Game
             base.Draw(gameTime);
         }
   ```
+
+For any help with getting your project setup see (these examples)[https://github.com/EmptyKeys/UI_Examples/tree/master/BasicUI_MonoGame] for more or come to (the forums)[http://emptykeys.com/Community/]
