@@ -26,28 +26,26 @@ A basic Guide to using EmptyKeys with Monogame
   - Add a reference to EmptyKeys.UserInterface.Designer (in the folder EmptyKeys/Generator/AnyCPU)
 
 - Right Click The UserInteface Project and click Properties, go down to Build Events and add Edit Post-Build...
-  - Add the Following: $(ProjectDir)..\EmptyKeys\Generator\ekUiGen.exe -i=$(ProjectDir) -o=$(ProjectDir)..\<MonoGame Game>\UI -oa=$(ProjectDir)..\<MonoGame Game>\Content -rm=MonoGame
-  - Replace "<MonoGame Game>" with the name of your game's project 
+  - Add the Following (replace `<MonoGame Game>` with the name of your project): 
+```
+$(ProjectDir)..\EmptyKeys\Generator\ekUiGen.exe -i=$(ProjectDir) -o=$(ProjectDir)..\<MonoGame Game>\UI -oa=$(ProjectDir)..\<MonoGame Game>\Content -rm=MonoGame
+```
 
 - Add a WPF UserControl to the UserInterface Project
 
 - Add EmptyKeys.UserInterface.Designer as an xmlns on the control like so
-  - xmlns:ek="clr-namespace:EmptyKeys.UserInterface.Designer;assembly=EmptyKeys.UserInterface.Designer"
+  - `xmlns:ek="clr-namespace:EmptyKeys.UserInterface.Designer;assembly=EmptyKeys.UserInterface.Designer"`
   - (Do not worry about the errors saying UIRoot doesn't exist in the namespace)
 
-- Change UserControl to ek:UIRoot and rename the File BasicUI
+- Change the root element from `UserControl` to `ek:UIRoot` and rename the File to BasicUI
   - (Do not worry about the error saying type 'ek:UIRoot' was not found)
   - You can delete UserControl.cs from the project, it won't be used 
 
 - Add some basic xaml to the control like this
-  ```
-  <TextBlock Text="Hello World" Grid.Row="0" />
-  ```
+  `<TextBlock Text="Hello World" Grid.Row="0" />`
   
 - Build the UserInterface Project, if it succeded there will be somthing similar in your Output window  
-```
-========== Build: 1 succeeded or up-to-date, 0 failed, 2 skipped, Completed at 3/31/2015 6:41:56 PM ==========
-```
+`========== Build: 1 succeeded or up-to-date, 0 failed, 2 skipped, Completed at 3/31/2015 6:41:56 PM ==========`
 
 - In the MonoGame project, right click the UI folder and add the generated class(es)
 
@@ -98,7 +96,7 @@ public class Game1 : Game
             FontManager.DefaultFont = Engine.Instance.Renderer.CreateFont(font);
             
             Viewport viewport = GraphicsDevice.Viewport;
-            root = new Root(viewport.Width, viewport.Height);
+            basicUI = new BasicUI(viewport.Width, viewport.Height);
             
             FontManager.Instance.LoadFonts(Content);
             // Load the images and sounds if necessary
@@ -108,7 +106,7 @@ public class Game1 : Game
             // Replace the escape to close command from the update method
             RelayCommand command = new RelayCommand(new Action<object>(ExitEvent));
             KeyBinding keyBinding = new KeyBinding(command, KeyCode.Escape, ModifierKeys.None);
-            root.InputBindings.Add(keyBinding);
+            basicUI.InputBindings.Add(keyBinding);
         }
         
         private void ExitEvent(object obj)
@@ -119,17 +117,17 @@ public class Game1 : Game
         protected override void Update(GameTime gameTime)
         {
             // remove the escape to exit line and add the following
-            root.UpdateInput(gameTime.ElapsedGameTime.Milliseconds);
-            root.UpdateLayout(gameTime.ElapsedGameTime.Milliseconds);
+            basicUI.UpdateInput(gameTime.ElapsedGameTime.Milliseconds);
+            basicUI.UpdateLayout(gameTime.ElapsedGameTime.Milliseconds);
             base.Update(gameTime);
         }
         
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            root.Draw(gameTime.ElapsedGameTime.TotalMilliseconds);
+            basicUI.Draw(gameTime.ElapsedGameTime.TotalMilliseconds);
             base.Draw(gameTime);
         }
   ```
 
-For any help with getting your project setup see (these examples)[https://github.com/EmptyKeys/UI_Examples/tree/master/BasicUI_MonoGame] for more or come to (the forums)[http://emptykeys.com/Community/]
+For any help with getting your project setup see [these examples](https://github.com/EmptyKeys/UI_Examples/tree/master/BasicUI_MonoGame), for more or come to [the forums](http://emptykeys.com/Community/)
